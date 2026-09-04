@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMS Management Console | MD MILON MIA</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --danger: #ef4444;
+
+      /* Official Platform Badges */
+      --brand-whatsapp: #25D366;
+      --brand-telegram: #24A1DE;
+      --brand-email: #EA4335;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-pill: 9999px;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-code: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg-base); color: var(--text-main); font-family: var(--font-body); }
+
+    .auth-view { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; }
+    .auth-card { background: #ffffff; width: 100%; max-width: 400px; padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+
+    .admin-layout { display: none; grid-template-columns: 260px 1fr; min-height: 100vh; }
+    .sidebar { background: #ffffff; border-right: 1px solid var(--border); padding: 2rem 1.2rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .nav-btn { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--radius-md); color: var(--text-muted); font-weight: 600; font-size: 0.9rem; border: none; background: none; cursor: pointer; text-align: left; }
+    .nav-btn.active, .nav-btn:hover { background: var(--primary-soft); color: var(--primary); }
+
+    .content-area { padding: 2.2rem; overflow-y: auto; max-height: 100vh; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+    .metric-box { background: #ffffff; border: 1px solid var(--border); padding: 1.5rem; border-radius: var(--radius-md); }
+    .metric-num { font-size: 2.2rem; font-weight: 800; color: var(--primary); }
+
+    .cms-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem; }
+    .cms-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .form-input { width: 100%; padding: 10px 14px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.92rem; outline: none; }
+    textarea.form-input { min-height: 100px; resize: vertical; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; text-decoration: none; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-outline { background: #fff; border: 1px solid var(--border-strong); color: var(--text-main); }
+    .btn-danger { background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; }
+
+    .table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .table th { text-align: left; padding: 12px; border-bottom: 2px solid var(--border); color: var(--text-muted); font-family: var(--font-code); }
+    .table td { padding: 14px 12px; border-bottom: 1px solid var(--border); }
+
+    /* Official Badges in Inbox */
+    .inbox-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .ib-whatsapp { background: #ecfdf5; color: var(--brand-whatsapp); border: 1px solid rgba(37, 211, 102, 0.4); }
+    .ib-telegram { background: #f0f9ff; color: var(--brand-telegram); border: 1px solid rgba(36, 161, 222, 0.4); }
+    .ib-email { background: #fef2f2; color: var(--brand-email); border: 1px solid rgba(234, 67, 53, 0.4); }
+
+    @media (max-width: 860px) {
+      .admin-layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .content-area { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTH SCREEN -->
+  <div class="auth-view" id="authView">
+    <div class="auth-card">
+      <h2 style="font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 1.2rem;">CMS Master Key</h2>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Admin Username</label>
+          <input type="text" id="adm-u" class="form-input" placeholder="admin" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Master Password</label>
+          <input type="password" id="adm-p" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Authenticate</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- WORKSPACE -->
+  <div class="admin-layout" id="adminWorkspace">
+    <aside class="sidebar">
+      <div>
+        <h3 style="font-weight: 800; color: var(--primary); margin-bottom: 1rem;">MILON CMS v5.0</h3>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px;">
+          <li><button class="nav-btn active" onclick="switchTab('analytics')"><i class="fa-solid fa-chart-line"></i> Analytics & Views</button></li>
+          <li><button class="nav-btn" onclick="switchTab('inbox')"><i class="fa-solid fa-inbox"></i> Inbound Messages</button></li>
+          <li><button class="nav-btn" onclick="switchTab('appearance')"><i class="fa-solid fa-sliders"></i> Identity & Header/Footer</button></li>
+          <li><button class="nav-btn" onclick="switchTab('services')"><i class="fa-solid fa-layer-group"></i> Specializations</button></li>
+          <li><button class="nav-btn" onclick="switchTab('projects')"><i class="fa-solid fa-box-archive"></i> Projects CRUD</button></li>
+          <li><button class="nav-btn" onclick="switchTab('contacts')"><i class="fa-solid fa-address-book"></i> Contacts & Socials</button></li>
+        </ul>
+      </div>
+      <button class="btn btn-outline" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Exit</button>
+    </aside>
+
+    <main class="content-area">
+      <div class="top-bar">
+        <div>
+          <h2 style="font-size: 1.5rem; font-weight: 800;">Management Workspace</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Real-time Central Synchronizer with index.html</p>
+        </div>
+        <a href="index.html" target="_blank" class="btn btn-primary"><i class="fa-solid fa-globe"></i> Open Website</a>
+      </div>
+
+      <!-- ANALYTICS TAB -->
+      <div id="tab-analytics" class="tab-pane">
+        <div class="metric-grid">
+          <div class="metric-box">
+            <span style="font-family: var(--font-code); font-size: 0.75rem; color: var(--text-muted);">TOTAL VIEWS</span>
+            <div class="metric-num" id="m-views">0</div>
+          </div>
+          <div class="metric-box">
+            <span style="font-family: var(--font-code); font-size: 0.75rem; color: var(--text-muted);">UNIQUE SESSIONS</span>
+            <div class="metric-num" id="m-visitors">0</div>
+          </div>
+          <div class="metric-box">
+            <span style="font-family: var(--font-code); font-size: 0.75rem; color: var(--text-muted);">PROJECT COUNT</span>
+            <div class="metric-num" id="m-projects">0</div>
+          </div>
+          <div class="metric-box">
+            <span style="font-family: var(--font-code); font-size: 0.75rem; color: var(--text-muted);">INBOX TRANSMISSIONS</span>
+            <div class="metric-num" id="m-leads">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INBOX WITH OFFICIAL PLATFORM BRANDING -->
+      <div id="tab-inbox" class="tab-pane" style="display: none;">
+        <div class="cms-card">
+          <h3>Received Leads & Transmissions</h3>
+          <table class="table">
+            <thead>
+              <tr><th>Platform</th><th>Timestamp</th><th>Sender</th><th>Contact</th><th>Message</th><th>Action</th></tr>
+            </thead>
+            <tbody id="inbox-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- IDENTITY, HEADER, HERO & FOOTER MANAGEMENT -->
+      <div id="tab-appearance" class="tab-pane" style="display: none;">
+        <div class="cms-card">
+          <h3>Brand Identity, Header & Footer Texts</h3>
+          <form onsubmit="saveAppearance(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Brand Name (Header / Hero)</label>
+                <input type="text" id="adm-name" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Brand Subtitle (Header / Chip)</label>
+                <input type="text" id="adm-subtitle" class="form-input" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Profile Avatar URL (Header Mini + Hero Card)</label>
+              <input type="url" id="adm-avatar-url" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Favicon URL / SVG Data</label>
+              <input type="text" id="adm-favicon-url" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hero Badge Text</label>
+              <input type="text" id="adm-badge" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hero Main Title (HTML supported e.g. &lt;span&gt;)</label>
+              <input type="text" id="adm-titleHtml" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Hero Bio Narrative</label>
+              <textarea id="adm-bio" class="form-input" required></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Footer Copyright Notice</label>
+              <input type="text" id="adm-footer" class="form-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Commit All Identity Changes</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- SPECIALIZATIONS MANAGER -->
+      <div id="tab-services" class="tab-pane" style="display: none;">
+        <div class="cms-card">
+          <h3>
+            <span>Add / Edit Specialization Domain</span>
+            <button class="btn btn-outline" onclick="resetServiceForm()" style="font-size: 0.75rem; padding: 4px 8px;">Reset Form</button>
+          </h3>
+          <form onsubmit="saveService(event)">
+            <input type="hidden" id="srv-id">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Domain Title</label>
+                <input type="text" id="srv-title" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">FontAwesome Icon Class</label>
+                <input type="text" id="srv-icon" class="form-input" placeholder="fa-solid fa-code" required>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Icon Color (Hex)</label>
+                <input type="text" id="srv-color" class="form-input" placeholder="#2563eb" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Icon BG Tint (Hex)</label>
+                <input type="text" id="srv-bg" class="form-input" placeholder="#eff6ff" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Domain Description</label>
+              <textarea id="srv-desc" class="form-input" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Specialization</button>
+          </form>
+        </div>
+
+        <div class="cms-card">
+          <h3>Current Specializations</h3>
+          <table class="table">
+            <thead>
+              <tr><th>Icon</th><th>Title</th><th>Description</th><th>Action</th></tr>
+            </thead>
+            <tbody id="srv-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PROJECTS CRUD -->
+      <div id="tab-projects" class="tab-pane" style="display: none;">
+        <div class="cms-card">
+          <h3>
+            <span>Add / Edit Project Case Study</span>
+            <button class="btn btn-outline" onclick="resetProjForm()" style="font-size: 0.75rem; padding: 4px 8px;">Reset Form</button>
+          </h3>
+          <form onsubmit="saveProject(event)">
+            <input type="hidden" id="p-id">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Project Title</label>
+                <input type="text" id="p-title" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category</label>
+                <input type="text" id="p-cat" class="form-input" placeholder="Telegram System" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Cover Image URL</label>
+              <input type="url" id="p-img" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Project Summary</label>
+              <textarea id="p-desc" class="form-input" required></textarea>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Live Demo Link</label>
+                <input type="url" id="p-live" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Source Code Link</label>
+                <input type="url" id="p-repo" class="form-input">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Project</button>
+          </form>
+        </div>
+
+        <div class="cms-card">
+          <h3>Current Projects List</h3>
+          <table class="table">
+            <thead>
+              <tr><th>Thumb</th><th>Title</th><th>Category</th><th>Action</th></tr>
+            </thead>
+            <tbody id="proj-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONTACTS & SOCIALS -->
+      <div id="tab-contacts" class="tab-pane" style="display: none;">
+        <div class="cms-card">
+          <h3>Official Messaging & Endpoint Channels</h3>
+          <form onsubmit="saveContacts(event)">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Primary Email</label>
+                <input type="email" id="adm-email" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Display Phone</label>
+                <input type="text" id="adm-phone" class="form-input" required>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">WhatsApp Target Number (e.g. 8801606643107)</label>
+                <input type="text" id="adm-whatsapp" class="form-input" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Telegram Username (without @ e.g. mdmilon0044)</label>
+                <input type="text" id="adm-tg" class="form-input" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Location Station</label>
+              <input type="text" id="adm-loc" class="form-input" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Endpoints</button>
+          </form>
+        </div>
+
+        <div class="cms-card">
+          <h3>Social Platforms Deck</h3>
+          <form onsubmit="addSocial(event)" style="display: flex; gap: 10px; margin-bottom: 1.5rem;">
+            <input type="text" id="soc-platform" class="form-input" placeholder="Platform" required style="flex: 1;">
+            <input type="text" id="soc-icon" class="form-input" placeholder="fa-brands fa-github" required style="flex: 1;">
+            <input type="url" id="soc-url" class="form-input" placeholder="URL Target" required style="flex: 2;">
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+
+          <table class="table">
+            <thead>
+              <tr><th>Platform</th><th>Icon</th><th>URL</th><th>Action</th></tr>
+            </thead>
+            <tbody id="soc-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'MD_MILON_MIA_PORTFOLIO_V5';
+    const AUTH_SESSION_KEY = 'MILON_ADMIN_AUTH_ACTIVE_V5';
+
+    function getStore() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    }
+    function saveStore(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('adm-u').value.trim();
+      const p = document.getElementById('adm-p').value.trim();
+      if (u === 'admin' && p === 'milon2026') {
+        sessionStorage.setItem(AUTH_SESSION_KEY, 'TRUE');
+        renderAdmin();
+      } else {
+        alert('Invalid credentials.');
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem(AUTH_SESSION_KEY);
+      location.reload();
+    }
+
+    function renderAdmin() {
+      document.getElementById('authView').style.display = 'none';
+      document.getElementById('adminWorkspace').style.display = 'grid';
+
+      const data = getStore();
+      if (!data) return;
+
+      // Metrics
+      document.getElementById('m-views').innerText = data.analytics.pageViews;
+      document.getElementById('m-visitors').innerText = data.analytics.uniqueVisitors;
+      document.getElementById('m-projects').innerText = data.projects.length;
+      document.getElementById('m-leads').innerText = data.inbox.length;
+
+      // Identity Form
+      document.getElementById('adm-name').value = data.appearance.name;
+      document.getElementById('adm-subtitle').value = data.appearance.subtitle;
+      document.getElementById('adm-avatar-url').value = data.appearance.avatar;
+      document.getElementById('adm-favicon-url').value = data.appearance.favicon;
+      document.getElementById('adm-badge').value = data.appearance.badge;
+      document.getElementById('adm-titleHtml').value = data.appearance.titleHtml;
+      document.getElementById('adm-bio').value = data.appearance.bio;
+      document.getElementById('adm-footer').value = data.appearance.footerText;
+
+      // Contacts Form
+      document.getElementById('adm-email').value = data.contacts.email;
+      document.getElementById('adm-phone').value = data.contacts.phone;
+      document.getElementById('adm-whatsapp').value = data.contacts.whatsapp;
+      document.getElementById('adm-tg').value = data.contacts.telegram;
+      document.getElementById('adm-loc').value = data.contacts.location;
+
+      // Inbox Table with Official Platform Badges
+      document.getElementById('inbox-tbody').innerHTML = data.inbox.map(m => {
+        let badgeHtml = '';
+        if (m.channel === 'whatsapp') {
+          badgeHtml = '<span class="inbox-badge ib-whatsapp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</span>';
+        } else if (m.channel === 'telegram') {
+          badgeHtml = '<span class="inbox-badge ib-telegram"><i class="fa-brands fa-telegram"></i> Telegram</span>';
+        } else {
+          badgeHtml = '<span class="inbox-badge ib-email"><i class="fa-solid fa-envelope"></i> Email</span>';
+        }
+
+        return `
+          <tr>
+            <td>${badgeHtml}</td>
+            <td style="font-family: var(--font-code); font-size: 0.75rem;">${m.time}</td>
+            <td><strong>${m.sender}</strong></td>
+            <td>${m.contact}</td>
+            <td style="max-width: 220px; color: var(--text-muted);">${m.message}</td>
+            <td>
+              <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteMsg('${m.id}')"><i class="fa-solid fa-trash"></i></button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Services Table
+      document.getElementById('srv-tbody').innerHTML = data.services.map(s => `
+        <tr>
+          <td><i class="${s.icon}" style="color: ${s.color};"></i></td>
+          <td><strong>${s.title}</strong></td>
+          <td style="color: var(--text-muted);">${s.desc}</td>
+          <td>
+            <button class="btn btn-outline" style="padding: 4px 8px;" onclick="editService('${s.id}')"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteService('${s.id}')"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Projects Table
+      document.getElementById('proj-tbody').innerHTML = data.projects.map(p => `
+        <tr>
+          <td><img src="${p.img}" style="width: 44px; height: 32px; object-fit: cover; border-radius: 4px;"></td>
+          <td><strong>${p.title}</strong></td>
+          <td>${p.category}</td>
+          <td>
+            <button class="btn btn-outline" style="padding: 4px 8px;" onclick="editProj('${p.id}')"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteProj('${p.id}')"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Socials Table
+      document.getElementById('soc-tbody').innerHTML = data.socials.map(s => `
+        <tr>
+          <td><i class="${s.icon}"></i> ${s.platform}</td>
+          <td style="font-family: var(--font-code);">${s.icon}</td>
+          <td style="font-size: 0.8rem;">${s.url}</td>
+          <td>
+            <button class="btn btn-danger" style="padding: 4px 8px;" onclick="deleteSoc('${s.id}')"><i class="fa-solid fa-trash"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(`tab-${tabId}`).style.display = 'block';
+      event.currentTarget.classList.add('active');
+    }
+
+    // Appearance Save
+    function saveAppearance(e) {
+      e.preventDefault();
+      const data = getStore();
+      data.appearance.name = document.getElementById('adm-name').value;
+      data.appearance.subtitle = document.getElementById('adm-subtitle').value;
+      data.appearance.avatar = document.getElementById('adm-avatar-url').value;
+      data.appearance.favicon = document.getElementById('adm-favicon-url').value;
+      data.appearance.badge = document.getElementById('adm-badge').value;
+      data.appearance.titleHtml = document.getElementById('adm-titleHtml').value;
+      data.appearance.bio = document.getElementById('adm-bio').value;
+      data.appearance.footerText = document.getElementById('adm-footer').value;
+
+      saveStore(data);
+      alert('All identity, header, and footer changes synchronized.');
+    }
+
+    // Contacts Save
+    function saveContacts(e) {
+      e.preventDefault();
+      const data = getStore();
+      data.contacts.email = document.getElementById('adm-email').value;
+      data.contacts.phone = document.getElementById('adm-phone').value;
+      data.contacts.whatsapp = document.getElementById('adm-whatsapp').value;
+      data.contacts.telegram = document.getElementById('adm-tg').value;
+      data.contacts.location = document.getElementById('adm-loc').value;
+
+      saveStore(data);
+      alert('Contact and official redirection protocols saved.');
+    }
+
+    // Services CRUD
+    function resetServiceForm() {
+      document.getElementById('srv-id').value = '';
+      document.getElementById('srv-title').value = '';
+      document.getElementById('srv-icon').value = '';
+      document.getElementById('srv-color').value = '';
+      document.getElementById('srv-bg').value = '';
+      document.getElementById('srv-desc').value = '';
+    }
+
+    function saveService(e) {
+      e.preventDefault();
+      const data = getStore();
+      const id = document.getElementById('srv-id').value;
+      const title = document.getElementById('srv-title').value;
+      const icon = document.getElementById('srv-icon').value;
+      const color = document.getElementById('srv-color').value;
+      const bg = document.getElementById('srv-bg').value;
+      const desc = document.getElementById('srv-desc').value;
+
+      if (id) {
+        const item = data.services.find(s => s.id === id);
+        if (item) Object.assign(item, { title, icon, color, bg, desc });
+      } else {
+        data.services.push({ id: `srv-${Date.now()}`, title, icon, color, bg, desc });
+      }
+
+      saveStore(data);
+      resetServiceForm();
+      renderAdmin();
+      alert('Specialization saved.');
+    }
+
+    function editService(id) {
+      const data = getStore();
+      const s = data.services.find(x => x.id === id);
+      if (!s) return;
+      document.getElementById('srv-id').value = s.id;
+      document.getElementById('srv-title').value = s.title;
+      document.getElementById('srv-icon').value = s.icon;
+      document.getElementById('srv-color').value = s.color;
+      document.getElementById('srv-bg').value = s.bg;
+      document.getElementById('srv-desc').value = s.desc;
+    }
+
+    function deleteService(id) {
+      if (!confirm('Delete this specialization domain?')) return;
+      const data = getStore();
+      data.services = data.services.filter(s => s.id !== id);
+      saveStore(data);
+      renderAdmin();
+    }
+
+    // Projects CRUD
+    function resetProjForm() {
+      document.getElementById('p-id').value = '';
+      document.getElementById('p-title').value = '';
+      document.getElementById('p-cat').value = '';
+      document.getElementById('p-img').value = '';
+      document.getElementById('p-desc').value = '';
+      document.getElementById('p-live').value = '';
+      document.getElementById('p-repo').value = '';
+    }
+
+    function saveProject(e) {
+      e.preventDefault();
+      const data = getStore();
+      const id = document.getElementById('p-id').value;
+      const title = document.getElementById('p-title').value;
+      const category = document.getElementById('p-cat').value;
+      const img = document.getElementById('p-img').value;
+      const desc = document.getElementById('p-desc').value;
+      const live = document.getElementById('p-live').value;
+      const repo = document.getElementById('p-repo').value;
+
+      if (id) {
+        const item = data.projects.find(p => p.id === id);
+        if (item) Object.assign(item, { title, category, img, desc, live, repo });
+      } else {
+        data.projects.unshift({ id: `pr-${Date.now()}`, title, category, img, desc, live, repo });
+      }
+
+      saveStore(data);
+      resetProjForm();
+      renderAdmin();
+      alert('Project saved.');
+    }
+
+    function editProj(id) {
+      const data = getStore();
+      const p = data.projects.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('p-id').value = p.id;
+      document.getElementById('p-title').value = p.title;
+      document.getElementById('p-cat').value = p.category;
+      document.getElementById('p-img').value = p.img;
+      document.getElementById('p-desc').value = p.desc;
+      document.getElementById('p-live').value = p.live || '';
+      document.getElementById('p-repo').value = p.repo || '';
+    }
+
+    function deleteProj(id) {
+      if (!confirm('Delete this project?')) return;
+      const data = getStore();
+      data.projects = data.projects.filter(p => p.id !== id);
+      saveStore(data);
+      renderAdmin();
+    }
+
+    // Socials CRUD
+    function addSocial(e) {
+      e.preventDefault();
+      const data = getStore();
+      data.socials.push({
+        id: `soc-${Date.now()}`,
+        platform: document.getElementById('soc-platform').value,
+        icon: document.getElementById('soc-icon').value,
+        url: document.getElementById('soc-url').value
+      });
+      saveStore(data);
+      document.getElementById('soc-platform').value = '';
+      document.getElementById('soc-icon').value = '';
+      document.getElementById('soc-url').value = '';
+      renderAdmin();
+    }
+
+    function deleteSoc(id) {
+      const data = getStore();
+      data.socials = data.socials.filter(s => s.id !== id);
+      saveStore(data);
+      renderAdmin();
+    }
+
+    function deleteMsg(id) {
+      const data = getStore();
+      data.inbox = data.inbox.filter(m => m.id !== id);
+      saveStore(data);
+      renderAdmin();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (sessionStorage.getItem(AUTH_SESSION_KEY) === 'TRUE') {
+        renderAdmin();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title id="dom-title">MD MILON MIA | Developer Portfolio</title>
+  <link id="dom-favicon" rel="icon" type="image/svg+xml" href="" />
+
+  <!-- Fonts & Official Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-elevated: #f1f5f9;
+      --border-subtle: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-faint: #94a3b8;
+
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --secondary: #7c3aed;
+
+      /* Official Platform Brand Colors */
+      --brand-whatsapp: #25D366;
+      --brand-whatsapp-bg: #ecfdf5;
+      --brand-telegram: #24A1DE;
+      --brand-telegram-bg: #f0f9ff;
+      --brand-email: #EA4335;
+      --brand-email-bg: #fef2f2;
+      --brand-success: #10b981;
+
+      --gradient-brand: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #06b6d4 100%);
+      --shadow-sm: 0 2px 5px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 25px -5px rgba(37, 99, 235, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+      --shadow-floating: 0 24px 48px -10px rgba(37, 99, 235, 0.16);
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-code: 'Fira Code', monospace;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION (PERFECT REAL-TIME CENTERING)
+       ========================================================================== */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      gap: 12px;
+    }
+
+    .brand-id {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      min-width: 0;
+      flex-shrink: 1;
+    }
+
+    .brand-avatar-box {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 50%;
+      padding: 2px;
+      background: var(--gradient-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 14px rgba(37, 99, 235, 0.35);
+      flex-shrink: 0;
+    }
+
+    .brand-avatar-box::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: var(--gradient-brand);
+      opacity: 0.4;
+      filter: blur(4px);
+      animation: pulseGlow 2.5s infinite ease-in-out;
+      z-index: -1;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.18); opacity: 0.7; }
+    }
+
+    .brand-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #ffffff;
+      border: 1.5px solid #ffffff;
+      display: block;
+    }
+
+    .brand-text {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .brand-text h3 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-text p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-item {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .nav-item:hover { color: var(--primary); }
+
+    /* Three-Line Menu Button */
+    .menu-toggle-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: var(--radius-md);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .menu-line {
+      width: 20px;
+      height: 2.2px;
+      background: var(--text-main);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    .menu-toggle-btn.active .menu-line:nth-child(1) { transform: translateY(7.2px) rotate(45deg); }
+    .menu-toggle-btn.active .menu-line:nth-child(2) { opacity: 0; }
+    .menu-toggle-btn.active .menu-line:nth-child(3) { transform: translateY(-7.2px) rotate(-45deg); }
+
+    .mobile-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 998;
+    }
+    .mobile-backdrop.active { opacity: 1; visibility: visible; }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 72px;
+      right: 0;
+      width: 82%;
+      max-width: 310px;
+      height: calc(100vh - 72px);
+      background: #ffffff;
+      box-shadow: var(--shadow-floating);
+      padding: 1.8rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      transform: translateX(100%);
+      transition: var(--transition);
+      z-index: 999;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+
+    .drawer-link {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* ==========================================================================
+       HERO SECTION & STYLISH CARD
+       ========================================================================== */
+    .hero-section {
+      padding: 130px 0 70px;
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: #ecfdf5;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-pill);
+      color: #065f46;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .status-dot { width: 8px; height: 8px; background: var(--brand-success); border-radius: 50%; }
+
+    .hero-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.18;
+      letter-spacing: -1.2px;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title span {
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .btn-elite {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+    .btn-elite-primary {
+      background: var(--gradient-brand);
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+    .btn-elite-primary:hover { transform: translateY(-2px); }
+
+    .hero-visual-frame {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      width: 100%;
+    }
+
+    .stylish-avatar-card {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      height: 420px;
+      border-radius: var(--radius-lg);
+      padding: 10px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-floating);
+      margin: 0 auto;
+    }
+
+    .stylish-avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: calc(var(--radius-lg) - 6px);
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-elevated);
+    }
+
+    .stylish-avatar-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .avatar-glass-chip {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ==========================================================================
+       SERVICES & PROJECTS
+       ========================================================================== */
+    .section-pad { padding: 80px 0; }
+    .sec-header { text-align: center; margin-bottom: 3rem; }
+    .sec-tag { font-family: var(--font-code); font-size: 0.8rem; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .sec-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-top: 4px; }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-box {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    .service-box:hover { transform: translateY(-4px); border-color: rgba(37, 99, 235, 0.35); }
+
+    .s-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-md);
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .project-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+    .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+
+    .p-img-box {
+      width: 100%;
+      height: 220px;
+      background: var(--bg-elevated);
+      position: relative;
+    }
+    .p-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    .p-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .p-content { padding: 1.6rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .p-content h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .p-content p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.2rem; flex-grow: 1; }
+
+    .p-links { display: flex; gap: 10px; }
+    .p-btn {
+      padding: 7px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .p-btn:hover { background: var(--primary); color: #ffffff; }
+
+    /* ==========================================================================
+       CONTACT FORM & BRANDED OFFICIAL DROPDOWN SYSTEM
+       ========================================================================== */
+    .contact-wrapper {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .info-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+      padding: 14px 16px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 1rem;
+      transition: var(--transition);
+    }
+    .info-card:hover { border-color: var(--primary); transform: translateX(4px); }
+    .info-card i { font-size: 1.3rem; width: 32px; text-align: center; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-label { display: block; font-size: 0.86rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      transition: var(--transition);
+      background: #ffffff;
+    }
+    .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12); }
+    textarea.form-control { min-height: 110px; resize: vertical; }
+
+    /* Interactive Dropdown with Official Brand Pill Badge */
+    .platform-selector-box {
+      border: 2px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      background: var(--bg-elevated);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .platform-select-dropdown {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.92rem;
+      background: #ffffff;
+      outline: none;
+      cursor: pointer;
+    }
+    .platform-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.8rem;
+      font-weight: 700;
+      width: fit-content;
+      transition: var(--transition);
+    }
+
+    .badge-wa { background: var(--brand-whatsapp-bg); color: var(--brand-whatsapp); border: 1px solid rgba(37, 211, 102, 0.3); }
+    .badge-tg { background: var(--brand-telegram-bg); color: var(--brand-telegram); border: 1px solid rgba(36, 161, 222, 0.3); }
+    .badge-em { background: var(--brand-email-bg); color: var(--brand-email); border: 1px solid rgba(234, 67, 53, 0.3); }
+
+    .social-btn-deck {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .soc-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      display: grid;
+      place-items: center;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .soc-circle:hover { background: var(--primary); color: #ffffff; transform: translateY(-3px); }
+
+    @media (max-width: 992px) {
+      .hero-layout, .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      .menu-toggle-btn { display: flex; }
+      .hero-section { padding-top: 110px; }
+      .hero-title { font-size: 2.4rem; }
+      .stylish-avatar-card { max-width: 320px; height: 380px; }
+      .contact-wrapper { padding: 1.8rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-nav">
+    <div class="container nav-wrapper">
+      <a href="#hero" class="brand-id">
+        <div class="brand-avatar-box">
+          <img id="header-avatar" src="" alt="Developer" class="brand-avatar-img">
+        </div>
+        <div class="brand-text">
+          <h3 id="header-brand-name"></h3>
+          <p id="header-brand-sub"></p>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <ul class="nav-links">
+        <li><a class="nav-item" href="#hero">Home</a></li>
+        <li><a class="nav-item" href="#services">Specializations</a></li>
+        <li><a class="nav-item" href="#projects">Work & Apps</a></li>
+        <li><a class="nav-item" href="#contact">Contact</a></li>
+      </ul>
+
+      <!-- Three-Line Menu Toggle Button -->
+      <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="Toggle navigation">
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-subtle);">
+      <div class="brand-avatar-box" style="width: 40px; height: 40px; min-width: 40px;">
+        <img id="drawer-avatar" src="" alt="Developer" class="brand-avatar-img">
+      </div>
+      <div>
+        <strong id="drawer-name" style="font-size: 0.95rem;"></strong>
+        <p style="font-size: 0.75rem; color: var(--text-muted);" id="drawer-sub"></p>
+      </div>
+    </div>
+    <a class="drawer-link" href="#hero" onclick="closeDrawer()"><i class="fa-solid fa-house" style="color: var(--primary);"></i> Home</a>
+    <a class="drawer-link" href="#services" onclick="closeDrawer()"><i class="fa-solid fa-layer-group" style="color: var(--secondary);"></i> Specializations</a>
+    <a class="drawer-link" href="#projects" onclick="closeDrawer()"><i class="fa-solid fa-cube" style="color: var(--primary);"></i> Work & Apps</a>
+    <a class="drawer-link" href="#contact" onclick="closeDrawer()"><i class="fa-solid fa-envelope" style="color: var(--brand-success);"></i> Contact</a>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section" id="hero">
+    <div class="container hero-layout">
+      <div>
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span id="hero-badge-txt"></span>
+        </div>
+        <h1 class="hero-title" id="hero-title-txt"></h1>
+        <p class="hero-subtitle" id="hero-bio-txt"></p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="#projects" class="btn-elite btn-elite-primary" id="hero-btn1-txt"><i class="fa-solid fa-folder-open"></i> Explore Work</a>
+          <a href="#contact" class="btn-elite" style="background: #ffffff; border: 1px solid var(--border-strong); color: var(--text-main);" id="hero-btn2-txt"><i class="fa-solid fa-paper-plane"></i> Contact Me</a>
+        </div>
+      </div>
+
+      <!-- CENTERED STYLISH PICTURE PRESENTATION -->
+      <div class="hero-visual-frame">
+        <div class="stylish-avatar-card">
+          <div class="stylish-avatar-inner">
+            <img id="hero-avatar-img" src="" alt="Developer Portrait">
+            <div class="avatar-glass-chip">
+              <div>
+                <div style="font-weight: 800; font-size: 0.95rem;" id="chip-name-txt"></div>
+                <div style="font-size: 0.75rem; color: var(--primary); font-weight: 700;" id="chip-role-txt"></div>
+              </div>
+              <i class="fa-solid fa-circle-check" style="color: var(--primary); font-size: 1.2rem;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIALIZATIONS -->
+  <section class="section-pad" id="services" style="background: var(--bg-surface); border-block: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">CAPABILITIES</span>
+        <h2 class="sec-title" id="sec-services-title">Core Development Domains</h2>
+      </div>
+      <div class="grid-cards" id="services-container"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section-pad" id="projects">
+    <div class="container">
+      <div class="sec-header">
+        <span class="sec-tag">PORTFOLIO</span>
+        <h2 class="sec-title" id="sec-projects-title">Featured Projects & Systems</h2>
+      </div>
+      <div class="project-grid" id="project-container"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT & MULTI-CHANNEL TRANSMISSION -->
+  <section class="section-pad" id="contact" style="background: var(--bg-surface); border-top: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div>
+          <span class="sec-tag">TRANSMISSION PORTAL</span>
+          <h2 class="sec-title" style="margin-bottom: 1rem;" id="contact-head-txt">Let's build your next product.</h2>
+          <p style="color: var(--text-muted); margin-bottom: 2rem;" id="contact-desc-txt">
+            Select your preferred communication protocol to connect directly with official branded endpoints.
+          </p>
+
+          <div id="contact-info-deck">
+            <a id="c-mail-link" href="#" class="info-card">
+              <i class="fa-solid fa-envelope" style="color: var(--brand-email);"></i>
+              <div>
+                <div style="font-size: 0.72rem; color: var(--text-faint);">Official Email</div>
+                <strong id="c-mail-txt"></strong>
+              </div>
+            </a>
+
+            <a id="c-phone-link" href="#" target="_blank" class="info-card">
+              <i class="fa-brands fa-whatsapp" style="color: var(--brand-whatsapp);"></i>
+              <div>
+                <div style="font-size: 0.72rem; color: var(--text-faint);">WhatsApp Direct</div>
+                <strong id="c-phone-txt"></strong>
+              </div>
+            </a>
+
+            <a id="c-tg-link" href="#" target="_blank" class="info-card">
+              <i class="fa-brands fa-telegram" style="color: var(--brand-telegram);"></i>
+              <div>
+                <div style="font-size: 0.72rem; color: var(--text-faint);">Telegram Channel/Chat</div>
+                <strong id="c-tg-txt"></strong>
+              </div>
+            </a>
+
+            <div class="info-card">
+              <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i>
+              <div>
+                <div style="font-size: 0.72rem; color: var(--text-faint);">Location Station</div>
+                <strong id="c-loc-txt"></strong>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <span style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted);">VERIFIED SOCIALS:</span>
+            <div class="social-btn-deck" id="social-btn-deck"></div>
+          </div>
+        </div>
+
+        <!-- Multi-Channel Dispatch Form with Official Icons -->
+        <form onsubmit="handleMultiChannelSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Choose Preferred Contact Platform</label>
+            <div class="platform-selector-box">
+              <select id="msg-channel" class="platform-select-dropdown" onchange="syncPlatformBadge()">
+                <option value="whatsapp">WhatsApp Direct Official</option>
+                <option value="telegram">Telegram Direct Official</option>
+                <option value="email">Email Client Official</option>
+              </select>
+              <div class="platform-live-badge badge-wa" id="platform-badge">
+                <i class="fa-brands fa-whatsapp"></i> Instant redirect to WhatsApp chat
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" id="sender-name" class="form-control" placeholder="e.g. Johnathan Lee" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Your Contact (Email / Phone / Telegram)</label>
+            <input type="text" id="sender-contact" class="form-control" placeholder="e.g. john@enterprise.com or +1..." required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Project Scope & Details</label>
+            <textarea id="sender-msg" class="form-control" placeholder="Describe features, timeline, and goals..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-elite btn-elite-primary" style="width: 100%; justify-content: center;">
+            <i class="fa-solid fa-paper-plane"></i> Dispatch Transmission
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="padding: 2.2rem 0; border-top: 1px solid var(--border-subtle); background: #ffffff; text-align: center;">
+    <div class="container">
+      <p style="font-size: 0.9rem; color: var(--text-muted);" id="footer-copy-txt"></p>
+    </div>
+  </footer>
+
+  <script>
+    const STORAGE_KEY = 'MD_MILON_MIA_PORTFOLIO_V5';
+
+    const DEFAULT_DATA = {
+      appearance: {
+        name: "MD MILON MIA",
+        subtitle: "Independent Developer",
+        badge: "Available for Custom Web & Telegram Projects",
+        titleHtml: "Building Modern <br><span>Digital Ecosystems</span> & Apps.",
+        bio: "I'm Md Milon Mia, an independent developer specializing in high-performance web development, custom Blogger themes, focused utility apps, and Telegram Mini Apps & automated bots.",
+        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?fit=crop&w=700&q=80",
+        favicon: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%232563eb'/><text x='50%' y='65%' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>M</text></svg>",
+        footerText: "© 2026 MD MILON MIA. All rights reserved. Independent Developer Platform."
+      },
+      contacts: {
+        email: "milon019065@gmail.com",
+        phone: "+880 160 664 3107",
+        whatsapp: "8801606643107",
+        telegram: "mdmilon0044",
+        location: "Jamalpur Sadar, Mymensingh, Bangladesh"
+      },
+      services: [
+        { id: "s-1", title: "Modern Web Development", desc: "Single-page web applications, clean responsive landing systems, and dynamic API integrations.", icon: "fa-solid fa-code", color: "#2563eb", bg: "#eff6ff" },
+        { id: "s-2", title: "Blogger Custom Themes", desc: "Custom XML layout architecture, 100% PageSpeed performance score, and structured SEO schema.", icon: "fa-solid fa-newspaper", color: "#7c3aed", bg: "#f5f3ff" },
+        { id: "s-3", title: "Lightweight Utility Apps", desc: "Single-purpose calculators, productivity web tools, and data calculators built for zero latency.", icon: "fa-solid fa-cubes", color: "#0891b2", bg: "#ecfeff" },
+        { id: "s-4", title: "Telegram Mini Apps & Bots", desc: "TMA WebApps, community automated gateways, custom bots, and webhook-driven logic systems.", icon: "fa-brands fa-telegram", color: "#0284c7", bg: "#f0f9ff" }
+      ],
+      socials: [
+        { id: "soc-1", platform: "Facebook", icon: "fa-brands fa-facebook-f", url: "https://facebook.com/mdmilon0044" },
+        { id: "soc-2", platform: "Telegram", icon: "fa-brands fa-telegram", url: "https://t.me/mdmilon0044" },
+        { id: "soc-3", platform: "GitHub", icon: "fa-brands fa-github", url: "https://github.com/milon0190" },
+        { id: "soc-4", platform: "Portfolio", icon: "fa-solid fa-globe", url: "http://www.milon.pro.bd" }
+      ],
+      projects: [
+        {
+          id: "pr-1",
+          title: "Telegram Automated Membership Gateway",
+          category: "Telegram System",
+          img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?fit=crop&w=800&q=80",
+          desc: "Subscription and verification bot with automated invite-link generation, custom captcha challenges, and real-time member audits.",
+          live: "https://t.me/mdmilon0044",
+          repo: "https://github.com/milon0190"
+        },
+        {
+          id: "pr-2",
+          title: "Ultra-Fast Minimalist Blogger Theme",
+          category: "Blogger Theme",
+          img: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?fit=crop&w=800&q=80",
+          desc: "Custom XML architecture built from scratch featuring 100% Google Lighthouse score, pure CSS grid layouts, and schema markup.",
+          live: "http://www.milon.pro.bd",
+          repo: "https://github.com/milon0190"
+        },
+        {
+          id: "pr-3",
+          title: "Focused Utility Arithmetic Engine",
+          category: "Utility App",
+          img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?fit=crop&w=800&q=80",
+          desc: "Lightweight client-side unit calculator supporting offline local caching, custom formula presets, and instantaneous results.",
+          live: "http://www.milon.pro.bd",
+          repo: "https://github.com/milon0190"
+        }
+      ],
+      inbox: [],
+      analytics: { pageViews: 240, uniqueVisitors: 98 }
+    };
+
+    function getStore() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_DATA));
+        return DEFAULT_DATA;
+      }
+      try { return JSON.parse(raw); } catch { return DEFAULT_DATA; }
+    }
+
+    function saveStore(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function renderPublicSite() {
+      const data = getStore();
+      const { appearance, contacts, services, socials, projects } = data;
+
+      // Meta & Favicon
+      document.getElementById('dom-title').innerText = `${appearance.name} | Portfolio`;
+      document.getElementById('dom-favicon').setAttribute('href', appearance.favicon);
+
+      // Header Elements
+      document.getElementById('header-avatar').src = appearance.avatar;
+      document.getElementById('drawer-avatar').src = appearance.avatar;
+      document.getElementById('header-brand-name').innerText = appearance.name;
+      document.getElementById('header-brand-sub').innerText = appearance.subtitle;
+      document.getElementById('drawer-name').innerText = appearance.name;
+      document.getElementById('drawer-sub').innerText = appearance.subtitle;
+
+      // Hero Elements
+      document.getElementById('hero-badge-txt').innerText = appearance.badge;
+      document.getElementById('hero-title-txt').innerHTML = appearance.titleHtml;
+      document.getElementById('hero-bio-txt').innerText = appearance.bio;
+      document.getElementById('hero-avatar-img').src = appearance.avatar;
+      document.getElementById('chip-name-txt').innerText = appearance.name;
+      document.getElementById('chip-role-txt').innerText = appearance.subtitle;
+
+      // Services Cards
+      document.getElementById('services-container').innerHTML = services.map(s => `
+        <div class="service-box">
+          <div class="s-icon" style="background: ${s.bg}; color: ${s.color};"><i class="${s.icon}"></i></div>
+          <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.6rem;">${s.title}</h3>
+          <p style="font-size: 0.92rem; color: var(--text-muted);">${s.desc}</p>
+        </div>
+      `).join('');
+
+      // Projects Cards
+      document.getElementById('project-container').innerHTML = projects.map(p => `
+        <div class="project-card">
+          <div class="p-img-box">
+            <img src="${p.img}" alt="${p.title}">
+            <span class="p-badge">${p.category}</span>
+          </div>
+          <div class="p-content">
+            <h3>${p.title}</h3>
+            <p>${p.desc}</p>
+            <div class="p-links">
+              ${p.live ? `<a href="${p.live}" target="_blank" rel="noopener" class="p-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>` : ''}
+              ${p.repo ? `<a href="${p.repo}" target="_blank" rel="noopener" class="p-btn"><i class="fa-brands fa-github"></i> Code</a>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Contacts
+      document.getElementById('c-mail-txt').innerText = contacts.email;
+      document.getElementById('c-mail-link').href = `mailto:${contacts.email}`;
+      document.getElementById('c-phone-txt').innerText = contacts.phone;
+      document.getElementById('c-phone-link').href = `https://wa.me/${contacts.whatsapp.replace(/[^0-9]/g, '')}`;
+      document.getElementById('c-tg-txt').innerText = `@${contacts.telegram}`;
+      document.getElementById('c-tg-link').href = `https://t.me/${contacts.telegram}`;
+      document.getElementById('c-loc-txt').innerText = contacts.location;
+
+      // Socials
+      document.getElementById('social-btn-deck').innerHTML = socials.map(s => `
+        <a href="${s.url}" target="_blank" rel="noopener" class="soc-circle" title="${s.platform}"><i class="${s.icon}"></i></a>
+      `).join('');
+
+      // Footer
+      document.getElementById('footer-copy-txt').innerText = appearance.footerText;
+    }
+
+    // Official Platform Dropdown Badge Synchronizer
+    function syncPlatformBadge() {
+      const channel = document.getElementById('msg-channel').value;
+      const badge = document.getElementById('platform-badge');
+      if (channel === 'whatsapp') {
+        badge.className = 'platform-live-badge badge-wa';
+        badge.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Instant redirect to WhatsApp chat';
+      } else if (channel === 'telegram') {
+        badge.className = 'platform-live-badge badge-tg';
+        badge.innerHTML = '<i class="fa-brands fa-telegram"></i> Instant redirect to Telegram chat';
+      } else {
+        badge.className = 'platform-live-badge badge-em';
+        badge.innerHTML = '<i class="fa-solid fa-envelope"></i> Instant draft in Official Email App';
+      }
+    }
+
+    // Transmission Submission with Official Redirection
+    function handleMultiChannelSubmit(e) {
+      e.preventDefault();
+      const channel = document.getElementById('msg-channel').value;
+      const name = document.getElementById('sender-name').value.trim();
+      const contact = document.getElementById('sender-contact').value.trim();
+      const msg = document.getElementById('sender-msg').value.trim();
+
+      const data = getStore();
+
+      // Record to Admin Inbox with Official Tag
+      data.inbox.unshift({
+        id: `inb-${Date.now()}`,
+        time: new Date().toISOString().replace('T', ' ').slice(0, 16),
+        channel: channel,
+        sender: name,
+        contact: contact,
+        message: msg
+      });
+      saveStore(data);
+
+      const encodedText = `Hello ${data.appearance.name},%0A%0AMy Name: ${encodeURIComponent(name)}%0AContact Details: ${encodeURIComponent(contact)}%0A%0AProject Brief:%0A${encodeURIComponent(msg)}`;
+
+      if (channel === 'whatsapp') {
+        const cleanWa = data.contacts.whatsapp.replace(/[^0-9]/g, '');
+        window.open(`https://api.whatsapp.com/send?phone=${cleanWa}&text=${encodedText}`, '_blank');
+      } else if (channel === 'telegram') {
+        const cleanTg = data.contacts.telegram.replace('@', '');
+        window.open(`https://t.me/${cleanTg}?text=${encodedText}`, '_blank');
+      } else {
+        window.location.href = `mailto:${data.contacts.email}?subject=Project Brief from ${encodeURIComponent(name)}&body=${encodedText}`;
+      }
+
+      e.target.reset();
+      syncPlatformBadge();
+    }
+
+    // Three-Line Hamburger Logic
+    const menuBtn = document.getElementById('menuToggleBtn');
+    const drawer = document.getElementById('mobileDrawer');
+    const backdrop = document.getElementById('mobileBackdrop');
+
+    menuBtn.addEventListener('click', () => {
+      drawer.classList.toggle('open');
+      backdrop.classList.toggle('active');
+      menuBtn.classList.toggle('active');
+    });
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      backdrop.classList.remove('active');
+      menuBtn.classList.remove('active');
+    }
+    backdrop.addEventListener('click', closeDrawer);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const d = getStore();
+      d.analytics.pageViews++;
+      if (!sessionStorage.getItem('MILON_VISIT_V5')) {
+        d.analytics.uniqueVisitors++;
+        sessionStorage.setItem('MILON_VISIT_V5', '1');
+      }
+      saveStore(d);
+      renderPublicSite();
+      syncPlatformBadge();
+    });
+  </script>
+</body>
+</html>
