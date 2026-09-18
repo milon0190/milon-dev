@@ -96,15 +96,15 @@
   <!-- AUTH SCREEN -->
   <div class="auth-view" id="authView">
     <div class="auth-card">
-      <h2 style="font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 1.2rem;">CMS Master Key</h2>
+      <h2 style="font-size: 1.4rem; font-weight: 800; text-align: center; margin-bottom: 1.2rem;">Login To Md Milon Portfolio Admin Panel</h2>
       <form onsubmit="handleLogin(event)">
         <div class="form-group">
-          <label class="form-label">Admin Username</label>
-          <input type="text" id="adm-u" class="form-input" placeholder="admin" required>
+          <label class="form-label">Admin Email</label>
+          <input type="text" id="adm-u" class="form-input" placeholder="Enter Email..." required>
         </div>
         <div class="form-group">
-          <label class="form-label">Master Password</label>
-          <input type="password" id="adm-p" class="form-input" placeholder="••••••••" required>
+          <label class="form-label">Admin Password</label>
+          <input type="password" id="adm-p" class="form-input" placeholder="Enter Password..." required>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Authenticate</button>
       </form>
@@ -385,7 +385,7 @@
       e.preventDefault();
       const u = document.getElementById('adm-u').value.trim();
       const p = document.getElementById('adm-p').value.trim();
-      if (u === 'admin' && p === 'milon2026') {
+      if (u === 'milon019065@gmail.com' && p === 'milon009') {
         sessionStorage.setItem(AUTH_SESSION_KEY, 'TRUE');
         renderAdmin();
       } else {
