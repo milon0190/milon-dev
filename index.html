@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MD MILON MIA | Full-Stack Web Developer</title>
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="MD MILON MIA | Full-Stack Web Developer">
+<meta property="og:description" content="Custom-coded business websites, e-commerce and full-stack web apps built around your business goals.">
+<meta property="og:type" content="website">
+<meta name="description" content="Custom-coded business websites and web apps by MD MILON MIA. Fast, secure, mobile-first.">
+<meta name="theme-color" content="#05060d">
+<link id="fav" rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="bar"></div><div id="glow"></div>
+<nav><div class="wrap">
+  <a href="#top" class="logo"><img id="navPic" alt=""><span id="navName"></span></a>
+  <div class="links" id="links"><a href="#services">Services</a><a href="#projects">Projects</a><a href="#process">Process</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+  <a class="nav-cta" href="#contact">Start a project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+  <button id="menu" aria-label="Open navigation menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars"></i></button>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="orb o1"></div><div class="orb o2"></div>
+  <div class="wrap">
+    <div>
+      <span class="badge"><i></i><span id="badge"></span></span>
+      <h1><span id="l1"></span><span class="l2 grad" id="l2"></span></h1>
+      <p class="lead" id="bio"></p>
+      <div class="cta">
+        <a href="#projects" class="btn p"><i class="fa-solid fa-eye"></i> See my work</a>
+        <a id="heroWa" href="#" target="_blank" rel="noopener" class="btn"><i class="fa-brands fa-whatsapp"></i> Start a project</a>
+      </div>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="pic"><div class="frame"><img id="heroPic" alt="Portrait of the developer"></div>
+      <div class="chip"><i class="fa-solid fa-code"></i><span><b id="chipName"></b><br><span id="chipRole" style="color:var(--mut)"></span></span></div>
+    </div>
+  </div>
+</header>
+
+<div class="mq" aria-label="Technologies"><div id="mq"></div></div>
+
+<section id="services"><div class="wrap">
+  <h2 class="h2 rv">What I build for you</h2><p class="sub rv">Every project is hand-coded from scratch. No page builders, no bloated templates.</p>
+  <div class="grid rv" id="svc"></div>
+</div></section>
+
+<section id="process"><div class="wrap">
+  <p class="eyebrow rv">A CLEAR PATH FROM IDEA TO LAUNCH</p><h2 class="h2 rv">Good work comes from a <span class="accent">good process.</span></h2>
+  <p class="sub rv">A transparent workflow keeps the scope clear, the build focused, and the launch predictable.</p>
+  <div class="process-grid rv">
+    <article class="step"><span>01 / DISCOVER</span><h3>Understand the goal</h3><p>Clarify your audience, business goals, features, constraints, and what success should look like.</p></article>
+    <article class="step"><span>02 / PLAN</span><h3>Map the solution</h3><p>Agree on scope, user journeys, milestones, technical approach, and deliverables before building.</p></article>
+    <article class="step"><span>03 / BUILD</span><h3>Design & develop</h3><p>Create a responsive interface and implement the required frontend, backend, data, and integrations.</p></article>
+    <article class="step"><span>04 / LAUNCH</span><h3>Test & hand over</h3><p>Check key flows and device sizes, prepare deployment, and explain how to use the delivered product.</p></article>
+  </div>
+</div></section>
+
+<section id="about"><div class="wrap about-grid">
+  <div><p class="eyebrow rv">ABOUT MY APPROACH</p><h2 class="h2 rv">Custom code.<br><span class="accent">Thoughtful execution.</span></h2></div>
+  <div class="about-copy rv"><p>I build digital experiences around the needs of the business—not just a visual trend. That means clear user journeys, responsive layouts, maintainable code, and practical features that help people get things done.</p><p>From a focused business website to a database-backed web application, each project starts with understanding the requirements and agreeing on a realistic scope.</p><a class="text-link" href="#contact">Tell me what you're building <i class="fa-solid fa-arrow-right"></i></a></div>
+</div></section>
+
+<section id="projects" style="background:var(--s1)"><div class="wrap">
+  <h2 class="h2 rv">Projects you can open right now</h2><p class="sub rv">Tap Live View to try a project, or Order Now to get one like it.</p>
+  <div class="filters rv" id="filters"></div>
+  <div class="pgrid" id="pg"></div>
+</div></section>
+
+<section id="contact"><div class="wrap contact-grid">
+  <div class="contact-intro rv"><p class="eyebrow">LET'S BUILD SOMETHING USEFUL</p><h2 class="h2">Ready to launch your <span class="accent">next idea?</span></h2><p class="lead">Share a few details about your project. The form will prepare a message you can send directly through WhatsApp.</p>
+    <a id="ctaWa" href="#" target="_blank" rel="noopener" class="btn p"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a><div class="cl" id="cl"></div>
+  </div>
+  <form class="inquiry rv" id="inquiry"><h3>Tell me about your project</h3><p class="form-note">No commitment—just a starting point for the conversation.</p>
+    <label for="inq-name">Your name</label><input id="inq-name" name="name" autocomplete="name" required maxlength="100" placeholder="Jane Smith">
+    <label for="inq-email">Email address</label><input id="inq-email" name="email" type="email" autocomplete="email" required maxlength="160" placeholder="jane@company.com">
+    <label for="inq-type">What do you need?</label><select id="inq-type" name="type" required><option value="">Choose a project type</option><option>Business website</option><option>E-commerce store</option><option>Full-stack web application</option><option>Admin dashboard</option><option>Website redesign</option><option>Other</option></select>
+    <div class="form-row"><div><label for="inq-budget">Estimated budget</label><select id="inq-budget" name="budget"><option value="Not decided">Not decided</option><option>Under $500</option><option>$500–$1,500</option><option>$1,500–$5,000</option><option>$5,000+</option><option>Let's discuss</option></select></div><div><label for="inq-timeline">Timeline</label><select id="inq-timeline" name="timeline"><option>Flexible</option><option>As soon as possible</option><option>Within a month</option><option>1–3 months</option></select></div></div>
+    <label for="inq-details">Project details</label><textarea id="inq-details" name="details" rows="4" maxlength="2000" required placeholder="What would you like to build? Any important features or references?"></textarea>
+    <button class="btn p submit-btn" type="submit"><i class="fa-brands fa-whatsapp"></i> Prepare project message</button><p class="form-note" id="form-note" aria-live="polite">Your message opens in WhatsApp for you to review and send.</p>
+  </form>
+</div></section>
+<footer><div class="wrap" id="foot"></div></footer>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+<script src="js/store.js"></script>
+<script src="js/firebase.js"></script>
+<script>window.MILON_FIREBASE_LOAD().finally(() => { const s = document.createElement('script'); s.src = 'js/site.js'; document.body.appendChild(s); });</script>
+</body></html>
